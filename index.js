@@ -1,9 +1,10 @@
 import express from "express";
 import adminRoutes  from "./routes/adminRoutes.js";
-import DataBaseFactory from "./database/DataBaseFactory.js";
+import parkingLotRoute from "./routes/partkingLotRoute.js";
 
 // Create the instance of Express
 const app = express();
+
 
 /**
  * What use() method will 
@@ -17,6 +18,7 @@ app.use(express.json());
 
 // mount routes
 app.use("/api/admin", adminRoutes);
+app.use("/api/parkinglot" , parkingLotRoute);
 
 const PORT = isNaN(process.env.PORT) ? 3000 : process.env.PORT ;
 // start the application 

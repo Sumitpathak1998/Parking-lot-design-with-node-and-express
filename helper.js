@@ -1,9 +1,10 @@
 import { Admin } from "./models/admin.js";
+import DataBaseFactory from "./database/DataBaseFactory.js";
 
 export class Helper {
 
     constructor() {
-        this.logginUser = null
+        this.logginUser = null;
     }
 
     setLogginUser = () => {
