@@ -15,7 +15,6 @@ export const createParkingLot = async (req,res) => {
         } 
         let parkingLot = new ParkingLot(req.body); 
         const resposne =  await createParkingLotService(parkingLot,user);
-        console.log(resposne);
         res.status(201).send({
             success : true ,
             id : resposne.insertId,
