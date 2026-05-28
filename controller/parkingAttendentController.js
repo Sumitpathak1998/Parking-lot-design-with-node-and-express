@@ -1,5 +1,5 @@
 import { AppError, handleError } from "../error.js";
-import { cretaeParkingAttendentService , removeParkingAttendentService , updateParkingAttendentService } from "../services/parkingAttendentService.js";
+import { cretaeParkingAttendentService , removeParkingAttendentService , updateParkingAttendentService , assignFloorToParkingAttendentService } from "../services/parkingAttendentService.js";
 import { Helper } from "../helper.js";
 import { ParkingAttendent } from "../models/parkingAttendent.js";
 
@@ -51,3 +51,18 @@ export const updateParkingAttendent = async (req,res) => {
         handleError(error,res);
     }
 };
+
+// We can go like one attendent can manage multiple floor
+export const assignFloorToParkingAttendent = async (req,res) => {
+    try {
+        const user = helper.getLoginUser();
+        if(user == null) {
+            handleError(new AppError("Invalid USer",401,true),res);       
+        } 
+        const {floor_id} = req.body;
+        const resposne =  await assignFloorToParkingAttendentService(req.params.id,floor_id,user);
+        helper.successResponse(res,200,resposne.message);
+    } catch (error) {
+        handleError(error,res);
+    }
+}

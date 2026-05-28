@@ -1,7 +1,7 @@
 import { ParkingAttendent } from "../models/parkingAttendent.js";
 import { Admin } from "../models/admin.js";
 import { AppError } from "../error.js";
-import { cretaeParkingAttendentRepo , removeParkingAttendentRepo , updateParkingAttendentRepo } from "../repositories/parkingAttendentRepository.js";
+import { cretaeParkingAttendentRepo , removeParkingAttendentRepo , updateParkingAttendentRepo , assignFloorToParkingAttendentRepo , checkParkingAttendentInfoRepo } from "../repositories/parkingAttendentRepository.js";
 
 export const cretaeParkingAttendentService = async (parkingAttendent,user) => {
     try {
@@ -49,6 +49,27 @@ export const updateParkingAttendentService = async (id,updates,user) => {
                 return {message : "Parking Attendent Updated"};
             } else {
                 throw new AppError("Parking Attendent Not Found",404,true);
+            }
+        } else {
+            throw new AppError("Only Admin is allow to Update User",403,true);
+        }    
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const assignFloorToParkingAttendentService = async (attendent_id,floor_id,user) => {
+    try {
+        if(user instanceof Admin) {
+            const attrendent_present = await checkParkingAttendentInfoRepo(attendent_id);
+            if(!attrendent_present) {
+                throw new AppError("Attendent User not present",404,true);
+            }
+            const response = await assignFloorToParkingAttendentRepo(attendent_id,floor_id);
+            if(response.affectedRows > 0) {
+                return {message : "Parking Attendent Assign to Floor"};
+            } else {
+                throw new AppError("Floor Id Not Found",404,true);
             }
         } else {
             throw new AppError("Only Admin is allow to Update User",403,true);
