@@ -1,25 +1,30 @@
 import { Admin } from "./models/admin.js";
-import DataBaseFactory from "./database/DataBaseFactory.js";
+import { User } from "./models/user.js";
+import { ParkingAttendent } from "./models/parkingAttendent.js";
 
 export class Helper {
 
-    constructor() {
-        this.logginUser = null;
-    }
-
-    setLogginUser = () => {
-        let info = {id : 1, name : "Sumit" , email : "sum@gmail.com" , role : 1};
-        if(info.role = 1) {
-            this.logginUser = new Admin(info);    
+    /**
+     * 
+     * @param {User} user 
+     */
+    static setLogginUser = (user) => {
+        let logginUser = null;
+        if(user.role == 1) {
+            logginUser = new Admin({ id : user.id , name : user.name , email : user.email , role : user.role});    
+        } else {
+            logginUser = new ParkingAttendent({ id : user.id , name : user.name , email : user.email , role : user.role});
         }
-        return null;
+        return logginUser;
     }
 
-    getLoginUser = () => {
-        return this.logginUser;
-    }
-
-    successResponse = (res,statusCode,message) => {
+    /**
+     * 
+     * @param {*} res 
+     * @param {number} statusCode 
+     * @param {String} message 
+     */
+    static successResponse = (res,statusCode,message) => {
         let code = Number(statusCode) ?? 200;
         res.status(code).send({
             success : true ,

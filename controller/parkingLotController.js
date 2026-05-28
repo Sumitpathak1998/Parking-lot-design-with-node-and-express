@@ -4,17 +4,10 @@ import { ParkingLot } from "../models/parkingLot.js";
 import { Helper } from "../helper.js";
 import { createParkingLotService , removeParkingLotService , updateParkingLotService} from "../services/parkingLotService.js";
 
-const helper = new Helper();
-helper.setLogginUser();
-
 export const createParkingLot = async (req,res) => {
-    try { 
-        let user = helper.getLoginUser();
-        if(user == null) {
-            handleError(new AppError("Invalid USer",401,true),res);       
-        } 
+    try {
         let parkingLot = new ParkingLot(req.body); 
-        const resposne =  await createParkingLotService(parkingLot,user);
+        const resposne =  await createParkingLotService(parkingLot);
         res.status(201).send({
             success : true ,
             id : resposne.insertId,
@@ -25,13 +18,9 @@ export const createParkingLot = async (req,res) => {
     }
 }
 export const removeParkingLot = async (req,res) => {
-    try {
-        let user = helper.getLoginUser();
-        if(user == null) {
-            handleError(new AppError("Invalid USer",401,true),res);       
-        } 
-        const resposne =  await removeParkingLotService(req.params.id,user);
-        helper.successResponse(res,200,resposne.message);
+    try { 
+        const resposne =  await removeParkingLotService(req.params.id);
+        Helper.successResponse(res,200,resposne.message);
     } catch (error) {
         handleError(error,res);
     }
@@ -39,14 +28,10 @@ export const removeParkingLot = async (req,res) => {
 
 export const updateParkingLot = async (req,res) => {
     try {
-        let user = helper.getLoginUser();
-        if(user == null) {
-            handleError(new AppError("Invalid USer",401,true),res);       
-        } 
         const id = Number(req.params.id);
         const update_data = req.body;
-        const resposne = await updateParkingLotService(id,update_data,user);
-        helper.successResponse(res,200,resposne.message);
+        const resposne = await updateParkingLotService(id,update_data);
+        Helper.successResponse(res,200,resposne.message);
     } catch (error) {
         handleError(error,res);
     }

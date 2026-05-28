@@ -1,22 +1,16 @@
 import { AppError } from "../error.js";
-import { Admin } from "../models/admin.js";
 import { createSpotTypeRepo , fetchAllSpotTypeRepo } from "../repositories/spotTypeRepository.js";
 
-export const createSpotTypeService = async (spotType,user) => {
+export const createSpotTypeService = async (spotType) => {
     try {
-        if(user instanceof Admin) {
-            const response =  await createSpotTypeRepo(spotType); 
-            return response;
-        } else {
-            throw new AppError("Only Admin is allow to create floor",403,true);
-        }
+        const response =  await createSpotTypeRepo(spotType); 
+        return response;
     } catch (error) {   
         throw error;
     }
 }
 
-export const fetchAllSpotTypeService = async () => {
-    // No need to authorized the user 
+export const fetchAllSpotTypeService = async () => { 
     try {
         const response =  await fetchAllSpotTypeRepo(); 
         return response;

@@ -3,8 +3,6 @@ import { createAdminService, removeAdminService , updateAdminService } from "../
 import { AppError, handleError } from "../error.js";
 import { Helper } from "../helper.js";
 
-const helper = new Helper();
-helper.setLogginUser();
 
 export const createAdmin = async (req,res) => {
     try {
@@ -22,12 +20,8 @@ export const createAdmin = async (req,res) => {
 
 export const removeAdmin = async(req,res) => {
     try {
-        let user = helper.getLoginUser();
-        if(user == null) {
-            handleError(new AppError("Invalid USer",401,true),res);       
-        } 
-        const resposne =  await removeAdminService(req.params.id,user);
-        helper.successResponse(res,200,resposne.message);
+        const resposne =  await removeAdminService(req.params.id);
+        Helper.successResponse(res,200,resposne.message);
     } catch (error) {
         handleError(error,res);
     }
@@ -35,14 +29,10 @@ export const removeAdmin = async(req,res) => {
 
 export const updateAdmin = async (req,res) => {
     try {
-        let user = helper.getLoginUser();
-        if(user == null) {
-            handleError(new AppError("Invalid USer",401,true),res);       
-        } 
         const id = Number(req.params.id);
         const update_data = req.body;
-        const resposne = await updateAdminService(id,update_data,user);
-        helper.successResponse(res,200,resposne.message);
+        const resposne = await updateAdminService(id,update_data);
+        Helper.successResponse(res,200,resposne.message);
     } catch (error) {
         handleError(error,res);
     }
