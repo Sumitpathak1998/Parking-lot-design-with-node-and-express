@@ -1,9 +1,16 @@
 import { Admin } from "../models/admin.js";
 import { createAdminRepo , removeAdminRepo ,updateAdminRepo } from "../repositories/adminRepository.js";
 import { AppError } from "../error.js";
+import { createHashPassword } from "./auth/becryptService.js";
 
+/**
+ * @param {Admin} admin 
+ * @returns 
+ */
 export const createAdminService = async (admin) => {
     try {
+        // before add the user encrypt the password 
+        admin.password = await createHashPassword(admin.password); 
         const response = await createAdminRepo(admin);    
         return response;
     } catch (error) {

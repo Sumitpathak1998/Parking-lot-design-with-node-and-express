@@ -2,9 +2,16 @@ import { ParkingAttendent } from "../models/parkingAttendent.js";
 import { Admin } from "../models/admin.js";
 import { AppError } from "../error.js";
 import { cretaeParkingAttendentRepo , removeParkingAttendentRepo , updateParkingAttendentRepo , assignFloorToParkingAttendentRepo , checkParkingAttendentInfoRepo } from "../repositories/parkingAttendentRepository.js";
+import { createHashPassword } from "./auth/becryptService.js";
 
+/**
+ * 
+ * @param {ParkingAttendent} parkingAttendent 
+ * @returns 
+ */
 export const cretaeParkingAttendentService = async (parkingAttendent) => {
     try {
+        parkingAttendent.password = await createHashPassword(parkingAttendent.password);
         const response = await cretaeParkingAttendentRepo(parkingAttendent);
         return response;
     } catch (error) {

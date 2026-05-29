@@ -7,9 +7,12 @@ const dbInstance = DataBaseFactory.getConnection("mysql");
 // Now make connection
 const db = await dbInstance.connect();
 
+/**
+ * @param {ParkingAttendent} parkingAttendent 
+*/
 export const cretaeParkingAttendentRepo = async (parkingAttendent) => {
     try {
-        const [result] =  await db.query("Insert into parking_lot.user (name,email,role) values(?,?,?)", [parkingAttendent.name,parkingAttendent.email,parkingAttendent.role]);
+        const [result] =  await db.query("Insert into parking_lot.user (name,email,password,role) values(?,?,?,?)", [parkingAttendent.name,parkingAttendent.password,parkingAttendent.email,parkingAttendent.role]);
         console.log("response at the time of inswet : ", result);
         return result;
     } catch (error) {

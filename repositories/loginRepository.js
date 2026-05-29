@@ -6,9 +6,14 @@ const dbInstance = DataBaseFactory.getConnection("mysql");
 // Now make connection
 const db = await dbInstance.connect();
 
-export const loginRepo = async(email,password) => {
+/**
+ * 
+ * @param {String} email 
+ * @returns 
+ */
+export const loginRepo = async(email) => {
     try {
-        const [result] = await db.query("select id, name , email , role from parking_lot.user where email = ? and password = ?",[email,password]);        
+        const [result] = await db.query("select id, name , email , password, role from parking_lot.user where email = ?",[email]);        
         console.log("Login Result : ",result);
         return result;
     } catch (error) {

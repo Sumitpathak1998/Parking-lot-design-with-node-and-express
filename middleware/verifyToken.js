@@ -1,8 +1,12 @@
 import { AppError, handleError } from "../error.js";
-import { decodeToken } from "../services/authJWTServices.js";
+import { decodeToken } from "../services/auth/authJWTServices.js";
 
 export const verifyJWTToken = async (req,res,next) => {
     try {
+        if(req.url == "/api/auth/login") {
+            return next();
+        }
+
         const authHeader = req.headers?.authorization;
 
         if(!authHeader) {
@@ -10,7 +14,7 @@ export const verifyJWTToken = async (req,res,next) => {
         }
 
         const token = authHeader.split(" ")[1];
-        const decode = await decodeToken(token);
+        const decode = decodeToken(token);
         console.log("user info : ", decode);
 
         req.user = decode;
