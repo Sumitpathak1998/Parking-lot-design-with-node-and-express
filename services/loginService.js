@@ -6,7 +6,7 @@ import { verifyPassword } from "./auth/becryptService.js";
 export const loginService = async(email,password) => {
     try {
         // encrypt password 
-        const loginInfo = await loginRepo(email,password);
+        const loginInfo = await loginRepo(email);
         if (loginInfo.length > 0) {
             // Once data is get on the basis of email , then go and verify the password 
             const response = await verifyPassword(password,loginInfo[0].password);
