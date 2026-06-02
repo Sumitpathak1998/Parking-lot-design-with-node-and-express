@@ -21,7 +21,7 @@ export const createSpotTypeRepo = async (spotType)  => {
 export const fetchAllSpotTypeRepo = async () => {
     try {
         const [response] = await db.query("SELECT * FROM parking_lot.spottype");
-        console.log("Spot Type added : ",response);
+        console.log("Spot Type details : ",response);
         return response;
     } catch (error) {
         throw new AppError(error.message,500,false,error.stack);

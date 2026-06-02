@@ -22,7 +22,6 @@ export const cretaeFloorRepo = async(floor) => {
  */
 export const createFloorDisplayRepo = async(insert_data) => {
     try {
-        console.log(insert_data);
         const [result] = await db.query("Insert into parking_lot.floordisplay (floor_id,spot_type_id) values ?",[insert_data]);
         console.log("response at the time of insert : " , result);
         return result;

@@ -19,3 +19,13 @@ export const checkFloorOccupancy = async (floor_id) => {
         throw new AppError(error.message,500,false,error.stack);
     }
 }
+
+export const checkFloorPanel = async (floor_id) => {
+    try {
+        const [result] = await db.query("select count(id) as panel_assign from parking_lot.panel where floor_id = ?",[floor_id]);
+        console.log("checkFloorOccupancy response : ",result[0]);
+        return result[0].panel_assign;
+    } catch (error) {
+        throw new AppError(error.message,500,false,error.stack);
+    }
+}
