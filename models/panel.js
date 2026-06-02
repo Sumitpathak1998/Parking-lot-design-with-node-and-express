@@ -1,6 +1,6 @@
 export class Panel {
 
-    constructor({id,name,panel_type,floor_id}) {
+    constructor({id = null,name,panel_type,floor_id}) {
         this.id = id;
         this.name = name;
         this.panel_type = panel_type;
