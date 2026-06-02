@@ -7,6 +7,7 @@ import spotTypeRoutes from "./routes/spotTypeRoute.js";
 import { verifyJWTToken } from "./middleware/verifyToken.js";
 import { adminAuthorizedMiddleWare } from "./middleware/adminAuthorizedMiddleware.js";
 import loginRoutes from "./routes/loginRoutes.js";
+import floorSpotRoutes from "./routes/floorSpotRoutes.js";
 
 // Create the instance of Express
 const app = express();
@@ -23,6 +24,7 @@ app.use("/api/parkinglot" , adminAuthorizedMiddleWare , parkingLotRoute);
 app.use("/api/parkingAttendent" , adminAuthorizedMiddleWare , parkingAttendentRoute);
 app.use("/api/floor" , adminAuthorizedMiddleWare , floorRoutes);
 app.use("/api/spotType" , adminAuthorizedMiddleWare , spotTypeRoutes);
+app.use("/api/floorSpot" , adminAuthorizedMiddleWare , floorSpotRoutes);
 
 const PORT = isNaN(process.env.PORT) ? 3000 : process.env.PORT ;
 // start the application 
