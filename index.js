@@ -9,6 +9,7 @@ import { adminAuthorizedMiddleWare } from "./middleware/adminAuthorizedMiddlewar
 import loginRoutes from "./routes/loginRoutes.js";
 import floorSpotRoutes from "./routes/floorSpotRoutes.js";
 import panelRoutes from "./routes/panelRoutes.js";
+import ticketGenerateRoutes from "./routes/generateTicketRoutes.js";
 
 // Create the instance of Express
 const app = express();
@@ -27,6 +28,9 @@ app.use("/api/floor" , adminAuthorizedMiddleWare , floorRoutes);
 app.use("/api/spotType" , adminAuthorizedMiddleWare , spotTypeRoutes);
 app.use("/api/floorSpot" , adminAuthorizedMiddleWare , floorSpotRoutes);
 app.use("/api/panel" , adminAuthorizedMiddleWare , panelRoutes);
+
+// parking attendent route
+app.use("/api/ticket" , ticketGenerateRoutes);
 
 const PORT = isNaN(process.env.PORT) ? 3000 : process.env.PORT ;
 // start the application 

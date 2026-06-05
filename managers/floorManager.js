@@ -29,3 +29,13 @@ export const checkFloorPanel = async (floor_id) => {
         throw new AppError(error.message,500,false,error.stack);
     }
 }
+
+export const fetchEmptySpotBasisOfVehicleType = async (vehicle_type_id) => {
+    try {
+        const [result] = await db.query("SELECT a.id as `spot_id` , a.floor_id as `floor_id` from parking_lot.floorspot a left join parking_lot.spotvehiclerelation b on a.spot_type = b.spot_type_id and b.vehicle_type_id = ? where a.occupied = 0 order by id asc limit 1",[vehicle_type_id]);
+        console.log("checkFloorOccupancy response : ",result);
+        return result;
+    } catch (error) {
+        throw new AppError(error.message,500,false,error.stack);
+    }
+}
