@@ -10,6 +10,7 @@ import loginRoutes from "./routes/loginRoutes.js";
 import floorSpotRoutes from "./routes/floorSpotRoutes.js";
 import panelRoutes from "./routes/panelRoutes.js";
 import ticketGenerateRoutes from "./routes/generateTicketRoutes.js";
+import parkingRateRoutes from "./routes/parkingRateRoutes.js";
 
 // Create the instance of Express
 const app = express();
@@ -28,6 +29,7 @@ app.use("/api/floor" , adminAuthorizedMiddleWare , floorRoutes);
 app.use("/api/spotType" , adminAuthorizedMiddleWare , spotTypeRoutes);
 app.use("/api/floorSpot" , adminAuthorizedMiddleWare , floorSpotRoutes);
 app.use("/api/panel" , adminAuthorizedMiddleWare , panelRoutes);
+app.use("/api/parkingRate" , adminAuthorizedMiddleWare , parkingRateRoutes);
 
 // parking attendent route
 app.use("/api/ticket" , ticketGenerateRoutes);
