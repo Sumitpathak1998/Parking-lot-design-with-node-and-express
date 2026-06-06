@@ -11,6 +11,7 @@ import floorSpotRoutes from "./routes/floorSpotRoutes.js";
 import panelRoutes from "./routes/panelRoutes.js";
 import ticketGenerateRoutes from "./routes/generateTicketRoutes.js";
 import parkingRateRoutes from "./routes/parkingRateRoutes.js";
+import parkingChargesRoutes from "./routes/parkingChargesRoutes.js";
 
 // Create the instance of Express
 const app = express();
@@ -33,7 +34,7 @@ app.use("/api/parkingRate" , adminAuthorizedMiddleWare , parkingRateRoutes);
 
 // parking attendent route
 app.use("/api/ticket" , ticketGenerateRoutes);
-
+app.use("/api/exit" , parkingChargesRoutes);
 const PORT = isNaN(process.env.PORT) ? 3000 : process.env.PORT ;
 // start the application 
 app.listen(PORT, () => {

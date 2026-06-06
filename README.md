@@ -13,4 +13,6 @@
     first_hour : 4,
 }
 
-Only those which we want to Update 
+
+## For Calculate the Parking charges 
+## URL : http://localhost:3000/api/exit/parkingCharge/:id
