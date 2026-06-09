@@ -39,3 +39,46 @@ export const fetchEmptySpotBasisOfVehicleType = async (vehicle_type_id) => {
         throw new AppError(error.message,500,false,error.stack);
     }
 }
+
+const calculateTimeDurationInHour = (datetime) => {
+    try {
+        const entry_time = new Date(datetime);
+        const exit_time = new Date();
+
+        console.log("Entry time : ", entry_time);
+        console.log("Exit Time : " , exit_time);
+        
+        // difference in milisecond 
+        const diff = exit_time - entry_time;
+        
+        // difference in Hour 
+        const hours = diff / (1000 * 60 * 60);
+        
+        const rounded = Math.ceil(hours);
+        return rounded;
+    } catch (error) {
+        throw new AppError(error.message,500,false,error.stack);
+    }
+}
+
+export const calculateParkingCharges = (rates,entryTime) => {
+    try {
+        const total_hours = calculateTimeDurationInHour(entryTime);
+        let amount = 0;
+        const hous_range = Array.from({length : total_hours + 1} , (value,index) => index );
+        for (const hour of hous_range) {
+            if(hour == 1) {
+                amount += rates["FIRST_HOUR"];
+            } else if( hour == 2 || hour == 3) {
+                amount += rates["SECOND_THIRD_HOUR"];
+            } else if (hour == 0) {
+                continue;
+            } else {
+                amount += rates["REMAINING_HOUR"];
+            }
+        }
+        return amount;
+    } catch (error) {
+        throw error;
+    }
+}

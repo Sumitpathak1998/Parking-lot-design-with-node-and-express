@@ -32,3 +32,13 @@ export const updateParkingRateRepo = async (hour_type,rate) => {
         throw new AppError(error.message,500,false,error.stack);
     }
 }
+
+export const fetchParkingRate = async() => {
+    try {
+        const [result] = await db.query("SELECT * FROM parking_lot.parkingrate");
+        console.log("result of parking rate : " , result);
+        return result;
+    } catch (error) {
+        throw new AppError(error.message,500,false,error.stack);
+    }
+}

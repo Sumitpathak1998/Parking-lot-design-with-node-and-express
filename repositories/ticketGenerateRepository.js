@@ -21,6 +21,15 @@ export const fetchEmptySpot = async (vehicle_type_id) => {
     }
 }
 
+export const fetchTicketInfo = async (ticket_id) => {
+    try {
+        const [result] = await db.query("SELECT * FROM parking_lot.ticket WHERE id = ?",[ticket_id]);
+        return result[0];
+    } catch (error) {
+        throw new AppError(error.message,500,false,error.stack);   
+    }
+}
+
 /**
  * @param {Ticket} ticket 
  */
