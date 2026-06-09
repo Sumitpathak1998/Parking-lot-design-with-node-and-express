@@ -1,12 +1,12 @@
 import jwt from "jsonwebtoken";
 import { AppError , handleError } from "../../error.js";
 
-export const generateToken = ({id , name , email , role}) => {
+export const generateToken = (payload,expires = "20m") => {
     try {
-        const token =  jwt.sign({ id , name , email , role } , 
+        const token =  jwt.sign(payload , 
             process.env.JWT_SECRET , 
             {
-                expiresIn : "20m"
+                expiresIn : expires
             }
         );
         return token;   

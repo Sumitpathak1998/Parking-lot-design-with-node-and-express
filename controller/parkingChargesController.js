@@ -8,8 +8,9 @@ export const calculateParkingCharges = async (req,res) => {
         const response = await calculateParkingChargesService(ticket_id);
         res.status(200).send({
             success : true ,
-            amount : response.amount,
-            url : "Pay at /api/exit/payment"
+            payment_token : response.token,
+            amount : response.amount ,
+            url : "Pay at /api/pay/payment"
         }) 
     } catch (error) {
         handleError(error,res);

@@ -11,7 +11,8 @@ export const loginService = async(email,password) => {
             // Once data is get on the basis of email , then go and verify the password 
             const response = await verifyPassword(password,loginInfo[0].password);
             if(response) {
-                const jwt_token = await generateToken(loginInfo[0]);
+                const user = loginInfo[0];
+                const jwt_token = await generateToken({id : user.id , name : user.name , email : user.email , role : user.role});
                 return { token : jwt_token};
             } else {
                 throw new AppError("Credential is wrong",400,true);    
