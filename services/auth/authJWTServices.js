@@ -15,10 +15,20 @@ export const generateToken = (payload,expires = "20m") => {
     }
 }
 
-export const decodeToken = (token) => {
+export const decodeToken = (token,token_name = null) => {
     try {
         return jwt.verify(token,process.env.JWT_SECRET);
     } catch (error) {
-        throw new AppError(error.message,500,true,error.stack);
+        if (error.name === "TokenExpiredError") {
+            if(token_name == "access_token") {
+                return "JWT has expired";
+            } else {
+                throw new AppError("JWT has expired",500,true,error.stack);
+            }
+        } else if (error.name === "JsonWebTokenError") {
+            throw new AppError("Invalid JWT",500,true,error.stack);
+        } else {
+            throw new AppError("Error : "+ error.message,500,true,error.stack);
+        }
     }
 }

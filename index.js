@@ -1,11 +1,10 @@
 import express from "express";
+import requestIp from "request-ip";
 import adminRoutes  from "./routes/adminRoutes.js";
 import parkingLotRoute from "./routes/partkingLotRoute.js";
 import parkingAttendentRoute from "./routes/parkingAttendentRoute.js";
 import floorRoutes from "./routes/floorRoutes.js";
 import spotTypeRoutes from "./routes/spotTypeRoute.js";
-import { verifyJWTToken } from "./middleware/verifyToken.js";
-import { adminAuthorizedMiddleWare } from "./middleware/adminAuthorizedMiddleware.js";
 import loginRoutes from "./routes/loginRoutes.js";
 import floorSpotRoutes from "./routes/floorSpotRoutes.js";
 import panelRoutes from "./routes/panelRoutes.js";
@@ -13,11 +12,15 @@ import ticketGenerateRoutes from "./routes/generateTicketRoutes.js";
 import parkingRateRoutes from "./routes/parkingRateRoutes.js";
 import parkingChargesRoutes from "./routes/parkingChargesRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
+import { verifyJWTToken } from "./middleware/verifyToken.js";
+import { adminAuthorizedMiddleWare } from "./middleware/adminAuthorizedMiddleware.js";
 
 // Create the instance of Express
 const app = express();
 
 app.use(express.json());
+
+app.use(requestIp.mw());
 
 // auth middleware 
 app.use(verifyJWTToken);
@@ -37,7 +40,9 @@ app.use("/api/parkingRate" , adminAuthorizedMiddleWare , parkingRateRoutes);
 app.use("/api/ticket" , ticketGenerateRoutes);
 app.use("/api/exit" , parkingChargesRoutes);
 app.use("/api/pay" , paymentRoutes);
+
 const PORT = isNaN(process.env.PORT) ? 3000 : process.env.PORT ;
+
 // start the application 
 app.listen(PORT, () => {
     console.log(`Server is started at PORT : ${PORT}`);
